@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//#edit
+//Удалить, если класс не нужен
 public class WhereBoat : MonoBehaviour
 {
     // Start is called before the first frame update

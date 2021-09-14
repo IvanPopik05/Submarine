@@ -42,6 +42,9 @@ public class BtnArrows : MonoBehaviour
             WrongAnswer(50);
         }
     }
+
+    //#refactor
+    //Изменить проверку значения value. Убрать литералы(1,2,3 и т.д.) и использовать константы или enum
     private void Turned(float value) 
     {
         float zTurned = movementGame.Boat.transform.eulerAngles.z;
@@ -67,6 +70,8 @@ public class BtnArrows : MonoBehaviour
         }
     }
 
+    //#refactor
+    //Оставить один метод SelectBtn, удалить 4 нижеследующих
     private void SelectBtn(float value)
     {
         switch (movementGame.TypeBoat)

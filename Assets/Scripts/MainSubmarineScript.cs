@@ -54,6 +54,9 @@ public class MainSubmarineScript : MonoBehaviour
         int randDir = Random.Range(0,directions.Length);
         return directions[randDir];
     }
+
+    //#edit + #refactir
+    //Избавиться от чисел и использовать Screen.width и Screen.height
     void Update()
     {
         // Использование магических чисел... 
