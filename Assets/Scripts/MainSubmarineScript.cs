@@ -54,31 +54,6 @@ public class MainSubmarineScript : MonoBehaviour
         int randDir = Random.Range(0,directions.Length);
         return directions[randDir];
     }
-
-    //#edit + #refactir
-    //Избавиться от чисел и использовать Screen.width и Screen.height
-    void Update()
-    {
-        // Использование магических чисел... 
-        if (Boat.transform.position.x > 1076)
-        {
-            Boat.transform.position = new Vector2(19, Boat.transform.position.y);
-        }
-        if (Boat.transform.position.x < 19)
-        {
-            Boat.transform.position = new Vector2(1076, Boat.transform.position.y);
-        }
-        if (Boat.transform.position.y > 2000)
-        {
-            Boat.transform.position = new Vector2(Boat.transform.position.x, 100);
-        }
-        if (Boat.transform.position.y < 100)
-        {
-            Boat.transform.position = new Vector2(Boat.transform.position.x, 2000);
-        }
-
-        Boat.transform.Translate(Dir * speed * Time.deltaTime,Space.World);
-    }
     public void NewBoat() 
     {
         TypeBoat = RandomizeType();

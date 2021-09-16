@@ -8,7 +8,13 @@ public class BtnArrows : MonoBehaviour
     [SerializeField] private Score score;
     [SerializeField] private AnswerPanelScript answerPanel;
 
+    const int LeftBtn = 0;
+    const int RightBtn = 1;
+    const int UpBtn = 2;
+    const int DownBtn = 3;
 
+    const int SubstractScore = 50;
+    const int AddSCore = 25;
     private void CorrectAnswer(int amountScore) 
     {
         score.AddScore(amountScore);
@@ -19,50 +25,47 @@ public class BtnArrows : MonoBehaviour
         score.SubstractScore(amountScore);
         answerPanel.WrongAnswer();
     }
-    private void Movement(float value) 
+    private void Movement(int value) 
     {
-        if (movementGame.Dir == Vector2.left && value == 0)
+        if (movementGame.Dir == Vector2.left && value == LeftBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if (movementGame.Dir == Vector2.right && value == 1)
+        else if (movementGame.Dir == Vector2.right && value == RightBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if (movementGame.Dir == Vector2.up && value == 2)
+        else if (movementGame.Dir == Vector2.up && value == UpBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if (movementGame.Dir == Vector2.down && value == 3)
+        else if (movementGame.Dir == Vector2.down && value == DownBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
         else 
         {
-            WrongAnswer(50);
+            WrongAnswer(SubstractScore);
         }
     }
-
-    //#refactor
-    //Изменить проверку значения value. Убрать литералы(1,2,3 и т.д.) и использовать константы или enum
     private void Turned(float value) 
     {
         float zTurned = movementGame.Boat.transform.eulerAngles.z;
-        if (zTurned == 180 && value == 0)
+        if (zTurned == 180 && value == LeftBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if ((zTurned == 0 || zTurned == 360) && value == 1)
+        else if ((zTurned == 0 || zTurned == 360) && value == RightBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if (zTurned == 90 && value == 2)
+        else if (zTurned == 90 && value == UpBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(AddSCore);
         }
-        else if (zTurned == 270 && value == 3)
+        else if (zTurned == 270 && value == DownBtn)
         {
-            CorrectAnswer(25);
+            CorrectAnswer(SubstractScore);
         }
         else 
         {
@@ -70,9 +73,7 @@ public class BtnArrows : MonoBehaviour
         }
     }
 
-    //#refactor
-    //Оставить один метод SelectBtn, удалить 4 нижеследующих
-    private void SelectBtn(float value)
+    public void SelectBtn(int value)
     {
         switch (movementGame.TypeBoat)
         {
@@ -87,20 +88,28 @@ public class BtnArrows : MonoBehaviour
         }
         movementGame.NewBoat();
     }
-    public void LeftBtn(float value)
+
+    private void GetKey() 
     {
-        SelectBtn(value);
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) 
+        {
+            SelectBtn(LeftBtn);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            SelectBtn(RightBtn);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            SelectBtn(UpBtn);
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            SelectBtn(DownBtn);
+        }
     }
-    public void RightBtn(float value)
+    private void Update()
     {
-        SelectBtn(value);
-    }
-    public void UpBtn(float value)
-    {
-        SelectBtn(value);
-    }
-    public void DownBtn(float value) 
-    {
-        SelectBtn(value);
+        GetKey();
     }
 }
