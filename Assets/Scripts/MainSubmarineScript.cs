@@ -10,23 +10,44 @@ public class MainSubmarineScript : MonoBehaviour
     [SerializeField] private Image[] wherePanels;
     [Header("Colors")]
     [SerializeField] private Color yellowBoat, greenBoat;
-    public Image Boat;
-    [SerializeField] private float speed;
+    [SerializeField] GameObject[] Boats;
     [HideInInspector]public Vector2 Dir = Vector2.right;
+    [HideInInspector] public List<Image> BoatChildren = new List<Image>();
+    private void Awake()
+    {
+        for (int i = 0; i < Boats.Length; i++)
+        {
+            foreach (var boat in getBoats(Boats[i]))
+            {
+                BoatChildren.Add(boat);
+            }
+        }
+    }
+    private Image[] getBoats(GameObject parentBoats) 
+    {
+        return parentBoats.GetComponentsInChildren<Image>();
+    }
     private void SelectBoat() 
     {
         switch (TypeBoat)
         {
             case TypeBoat.MovementBoat:
-                Boat.color = greenBoat;
+                GetBoatColor(greenBoat);
                 WherePanelsActive(true);
                 break;
             case TypeBoat.TurnedBoat:
-                Boat.color = yellowBoat;
+                GetBoatColor(yellowBoat);
                 WherePanelsActive(false);
                 break;
             default:
                 break;
+        }
+    }
+    private void GetBoatColor(Color color) 
+    {
+        foreach (var boat in BoatChildren)
+        {
+            boat.color = color;
         }
     }
     private void WherePanelsActive(bool active) 
@@ -58,11 +79,26 @@ public class MainSubmarineScript : MonoBehaviour
     {
         TypeBoat = RandomizeType();
         Dir = RandomDirection();
-        if (Boat.transform.rotation.z > 360)
+        if (BoatChildren[0].transform.rotation.z > 360)
         {
-            Boat.transform.rotation = new Quaternion(0, 0, 0, 0);
+            TurnBackBoat();
         }
-        Boat.transform.Rotate(0, 0, 90);
+        RotateBoat();
         SelectBoat();
+    }
+
+    private void RotateBoat() 
+    {
+        foreach (var boat in BoatChildren)
+        {
+            boat.transform.Rotate(0,0,90);
+        }
+    }
+    private void TurnBackBoat() 
+    {
+        foreach (var boat in BoatChildren)
+        {
+            boat.transform.rotation = new Quaternion(0, 0, 0, 0);
+        }
     }
 }

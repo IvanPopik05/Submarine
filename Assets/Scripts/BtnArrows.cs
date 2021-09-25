@@ -50,7 +50,7 @@ public class BtnArrows : MonoBehaviour
     }
     private void Turned(float value) 
     {
-        float zTurned = movementGame.Boat.transform.eulerAngles.z;
+        float zTurned = movementGame.BoatChildren[0].transform.eulerAngles.z;
         if (zTurned == 180 && value == LeftBtn)
         {
             CorrectAnswer(AddSCore);
